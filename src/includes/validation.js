@@ -1,11 +1,43 @@
-import { Form as VeeForm, Field as VeeField, defineRule } from 'vee-validate';
-import { required } from '@vee-validate/rules';
+import {
+  Form as VeeForm,
+  Field as VeeField,
+  defineRule,
+  ErrorMessage,
+  configure
+} from "vee-validate";
+import {
+  required,
+  min,
+  max,
+  alpha_spaces as alphaSpaces,
+  email,
+  min_value as minVal,
+  max_value as maxVal,
+  confirmed,
+  not_one_of as excluded,
+} from "@vee-validate/rules";
 
 export default {
   install(app) {
-    app.component('vee-form', VeeForm);
-    app.component('vee-field', VeeField);
+    app.component("vee-form", VeeForm);
+    app.component("vee-field", VeeField);
+    app.component("ErrorMessage", ErrorMessage);
+    defineRule("required", required);
+    defineRule("min", min);
+    defineRule("max", max);
+    defineRule("alpha_spaces", alphaSpaces);
+    defineRule("email", email);
+    defineRule("min_value", minVal);
+    defineRule("max_value", maxVal);
+    defineRule("confirmed", confirmed);
+    defineRule("excluded", excluded);
 
-    defineRule('required', required);
+    configure({
+      validateOnBlur: true,
+      validateOnChange: true,
+      validateOnInput: false,
+      validateOnModelUpdate: true,
+    })
   },
 };
+// /* <ErrorMessage class="text-red-600" name="name" /> */
